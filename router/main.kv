@@ -1,0 +1,64 @@
+
+
+<MainWidget>:
+    increment_box: inp1
+    output_label: out1
+    BoxLayout:
+        canvas.before:
+            Color:
+                rgba: .5, .5, .5, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        width: root.width / 2
+        height: root.height
+        orientation: 'vertical'
+        BoxLayout:
+            size_hint: (1, .15)
+            orientation: 'horizontal'
+            Button:
+                text: 'Lewo'
+                on_press: root.rotate(-root.increment)
+            Button:
+                text: 'Prawo'
+                on_press: root.rotate(root.increment)
+        Label:
+            size_hint: (1, .3)
+            id: out1
+            text: 'Kąt: 0'
+        BoxLayout:
+            size_hint: (.5, .05)
+            orientation: 'horizontal'
+            Label:
+                text: 'Zmień kąt o: '
+            TextInput:
+                id: inp1
+                multiline: False
+                on_text_validate: root.set_increment()
+                text: str(root.increment)
+        Widget:
+            size_hint: (1, .5)
+            canvas.before:
+                Color:
+                    rgba: .2, .2, .2, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+            canvas.after:
+                Color:
+                    rgba: 1, .5, .5, .2
+                Ellipse:
+                    pos: self.center_x - 50, self.center_y - 50
+                    size: 100, 100
+                    angle_start: -90
+                    angle_end: root.angle - 90
+                Color:
+                    rgba: .9, .9, .9, 1
+                Line:
+                    points: self.center_x, self.center_y, self.center_x - (100 * math.cos(root.angle / 180 * math.pi)), self.center_y + (100 * math.sin(root.angle / 180 * math.pi))
+                    width: 2
+                Color:
+                    rgba: 1, .5, .5, 1
+                Ellipse:
+                    pos: self.center_x - 5, self.center_y - 5
+                    size: 10, 10
